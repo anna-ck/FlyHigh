@@ -1,0 +1,27 @@
+{
+  "name": "flyhigh",
+  "version": "1.0.0",
+  "description": "simple app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anna-ck/FlyHigh.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anna-ck/FlyHigh/issues"
+  },
+  "homepage": "https://github.com/anna-ck/FlyHigh#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "node-localstorage": "^2.1.6"
+  }
+}

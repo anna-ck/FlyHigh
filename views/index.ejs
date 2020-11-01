@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flyHigh</title>
+    <link href="style.css" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./images/favicon.png"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body onload='getCity()'>
+    <header>
+        <a onclick=fetchStart()>
+            <img class='logo' src='./images/favicon.png' alt='FlyHighlogo'>
+            <h3>flyHigh</h3>
+        </a>
+    </header>
+    <div id='home'>
+        <h2>Where this time?</h2>
+        <form class='search-form' action="/submit" method="post" >
+            <input class='search-form__input' name='city' type="text" id="city" placeholder= 'Enter city name' required onkeypress="return ValidateKey();" >
+            <button class='search-form__button' type="submit">Submit</button>
+        </form>
+        <div class='input-info'>
+        </div>
+        <form id='scroll' action="/submit" method="post" class='surprise-form'>
+            <button id='surpriseButton' class='surprise-button' type='submit' name='city2' value='' >No idea yet?<br><span>Let us surprise you!!!</span></button>
+        </form>
+    </div>
+    <% if(city !== null) { %>
+        <svg class='wave1' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f2ffff" fill-opacity="1" d="M0,32L24,58.7C48,85,96,139,144,154.7C192,171,240,149,288,138.7C336,128,384,128,432,154.7C480,181,528,235,576,229.3C624,224,672,160,720,133.3C768,107,816,117,864,133.3C912,149,960,171,1008,181.3C1056,192,1104,192,1152,181.3C1200,171,1248,149,1296,144C1344,139,1392,149,1416,154.7L1440,160L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"></path></svg>
+    <div class="container">
+        <div class='app-content'>
+            <div class="destination">
+                <% if(city !== null){ %>
+                    <h2><%= city %></h2>
+                <% } %>
+            </div>
+            <section class='block'>
+                <div class="block__title">
+                    <h1>TOP ATTRACTIONS</h1>
+                </div>
+                <% if(placesError !== null){ %>
+                    <p><%= placesError %></p>
+                <% } %>
+                <% if(places !== null){ %>
+                    <div class='attractions'>
+                        <% places.map((result, index)=>{ %>
+                                <div class="attractions__single" id="attraction1">
+                                    <img class="attraction__image" src= <%=result.categories[0].icon.prefix %>bg_64<%=result.categories[0].icon.suffix %>>
+                                    <h3><%= result.name  %></h3>
+                                    <p><%= result.location.address%></p>
+                                    <p><%= result.location.city%></p>
+                                    <p><%= result.location.country%></p>
+                                </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </section>
+            <section class='block'>
+                <div class="block__title">
+                    <h1>CURRENT WEATHER</h1>
+                </div>
+                <% if(weatherError !== null){ %>
+                    <p><%= weatherError %></p>
+                <% } %>
+                <% if(weather !== null){ %>
+                <div class="weather">
+                    <div class='weather__content'>
+                        <img class=weather__icon src= <%= %>http://openweathermap.org/img/wn/<%= weather.weather[0].icon %>@2x.png<%= %>>
+                        <h2><%= new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate() %></h2>
+                        <h2> <%= Math.floor(weather.main.temp) %> °C</h2>
+                        <p>Feels like: <%= Math.floor(weather.main.feels_like) %> °C</p>
+                        <p>Minimal temperature: <%= Math.floor(weather.main.temp_min) %> °C</p>
+                        <p>Maximal temperature: <%= Math.floor(weather.main.temp_max) %> °C</p>
+                        <p>Condition: <%=weather.weather[0].description %></p>
+                        <p>Humidity: <%=weather.main.humidity%> hPa</p>
+                        <p>Pressure: <%=weather.main.pressure%> hPa</p>
+                        </div>
+                </div>
+                <% } %>
+            </section>
+            <section class='block'>
+                <div class="block__title">
+                    <h1>CORONAVIRUS UPDATE</h1>
+                </div>
+                <div class='corona'>
+                    <img class='corona__icon' src='./images/corona.png' alt='coronavirusIcon'>
+                    <% if(coronaError !== null){ %>
+                        <div id="corona__error">
+                            <p><%= coronaError %></p>
+                        </div>
+                    <% } %>
+                    <% if(corona !== null){ %>
+                        <div class='corona__content'>
+                            <h2>Coronavirus situation in <%= corona.Country %> <br> up to <%=corona.Date.slice(0,10) %> </h2>
+                            <p>New coronavirus cases: <span> <%=corona.NewConfirmed %></span></p>
+                            <p>New coronavirus deaths: <span> <%=corona.NewDeaths %></span></p>
+                            <p>Total coronavirus cases: <span> <%=corona.TotalConfirmed %></span></p>
+                            <p>Total coronavirus deaths: <span> <%=corona.TotalDeaths %></span></p>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+        </div>
+        <div class=flight-content>
+            <svg class='wave2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f2ffff" fill-opacity="1" d="M0,160L48,144C96,128,192,96,288,112C384,128,480,192,576,192C672,192,768,128,864,117.3C960,107,1056,149,1152,181.3C1248,213,1344,235,1392,245.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+            <div class='block__title'>
+                <h1>CHECK OUT THE BEST FLIGHT DEALS!</h1>
+                <h5>Enter city code below</h5>
+                <form class='flight-form' method='post' action='/submit'>
+                    <input class='flight-form__input' type="text" id="origin" placeholder='e.g. LAX' name='destination'>
+                    <button class='flight-form__button' type="submit">Search</button>
+                </form>
+                <div class="flight-info">
+                    <% if(flightsError !== null){ %>
+                        <div id='flight-info'>
+                            <p><%= flightsError %></p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <% if(flights !== null && flights.data){ %>
+                <div id='flight-destination'>
+                    <p>Best flights from <%= destination.toUpperCase() %>:</p>
+                </div>
+                <div class='flights' id='flights'>
+                    <% flights.data.slice(0, 3).map((flight, index)=>{ %>
+                        <div class="flights__single">
+                            <h2><%=flight.destination %> <br> <span><%=flights.dictionaries.locations[flight.destination].detailedName%> <%=flights.dictionaries.locations[flight.destination].subType%></span></h2>
+                            <p>Departure date: <%=flight.departureDate%></p>
+                            <p>Return date: <%=flight.returnDate%></p>
+                            <p>Price: <%=flight.price.total%> EUR</p>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+            <footer>
+                <p>Copyright by @ACK 2020</p>
+            </footer>
+        </div>
+    </div>
+    <% } %>
+    <script type="text/javascript">
+    if (document.getElementById('flights')) {
+        document.getElementById('flights').scrollIntoView(true)
+    }
+    else if (document.getElementById('flight-info')) {
+        document.getElementById('flight-info').scrollIntoView(true)
+    }
+    else {
+        document.getElementById('scroll').scrollIntoView(true)
+    }
+     </script>
+     <script>
+         function fetchStart () {
+            fetch('/')
+            window.location.href = 'http://localhost:3000/'
+         }
+     </script>
+     <script>
+         const getCity = async () => {
+            let surpriseButton = document.getElementById('surpriseButton')
+            const cities = ['London', 'Paris', 'Miami', 'Milan', 'Sydney', 'Warsaw', 'Madrid', 'Barcelona'];
+            let num = Math.floor(Math.random() * cities.length)
+            const surpriseCity = await cities[num]
+            surpriseButton.value = surpriseCity
+         }
+         function ValidateKey() {   
+            let key=window.event.keyCode;
+            let allowed='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ';
+            return allowed.indexOf(String.fromCharCode(key)) !=-1 ;
+        }
+     </script>
+</body>
+</html>
