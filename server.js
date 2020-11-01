@@ -1,8 +1,10 @@
 const express = require('express');
+require('dotenv').config()
 //const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const fetch = require("node-fetch");
-const dotenv = require('dotenv');
+//import fetch from 'node-fetch'
+//const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 if (typeof localStorage === "undefined" || localStorage === null) {
