@@ -1,4 +1,5 @@
 const express = require('express');
+//const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const fetch = require("node-fetch");
 const dotenv = require('dotenv');
@@ -12,12 +13,21 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/client'))
+//app.engine('ejs', require('ejs').__express);
+app.use(express.static("client"))
 
+/*
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+*/
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port);
+
 
 router.get('/', function (req, res) {
     res.render('index', {places: null, placesError: null, city: null, weather: null});
@@ -129,3 +139,5 @@ router.post('/submit', async (req, res) => {
 })
 
 app.use('/', router);
+
+//module.exports.handler = serverless(app)
