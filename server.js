@@ -65,11 +65,11 @@ router.post('/submit', async (req, res) => {
             places = json.response.groups[0].items.map(item => item.venue)
         }
         else {
-            placesError = 'Attractions not available'
+            placesError = `Attractions in ${city.toUpperCase()} not available`
         }
     }
     else {
-        placesError = 'Attractions not available'
+        placesError = `Attractions in ${city.toUpperCase()} not available`
     }
     const weatherResponse = await fetch(weatherUrlToFetch)
     if (weatherResponse.ok) {
@@ -78,11 +78,11 @@ router.post('/submit', async (req, res) => {
             weather = jsonWeather
         }
         else {
-            weatherError = 'Weather not available'
+            weatherError = `Weather in ${city.toUpperCase()} not available`
         }
     }
     else {
-        weatherError = 'Weather not available'
+        weatherError = `Weather in ${city.toUpperCase()}  not available`
     }
     const coronaResponse = await fetch(coronaUrlToFetch)
     if (coronaResponse.ok) {
@@ -95,11 +95,11 @@ router.post('/submit', async (req, res) => {
             }
         }
         else {
-            coronaError = 'Coronavirus data not available'
+            coronaError = `Coronavirus situation in ${city.toUpperCase()} not available`
         }
     }
     else {
-        coronaError = 'Coronavoris data not available'
+        coronaError = `Coronavirus  situation in ${city.toUpperCase()} not available`
     }
     if (destination) {
         const urlToken = 'https://test.api.amadeus.com/v1/security/oauth2/token'
@@ -119,9 +119,14 @@ router.post('/submit', async (req, res) => {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-            flights = await flightsResponse.json()
-            if (!flights.data) {
-                flightsError = 'Flights data not available'
+            if (flightsResponse.ok) {
+                flights = await flightsResponse.json()
+                if (!flights.data) {
+                    flightsError = `Flights from ${destination} are not available at the moment`
+                }
+            }
+            else {
+                flightsError = `Flights from ${destination} are not available at the moment`
             }
         }
     }
