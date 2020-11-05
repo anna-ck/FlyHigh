@@ -41,16 +41,17 @@ header img {
   background-image: url('./images/start.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
-  #home h2 {
+#home h2 {
   width: calc(100% - 2.4rem);
   padding: 1.2rem;
-  margin: 0rem auto 4rem auto;
+  margin: 4rem auto 4rem auto;
   font-size: 3.8rem;
   font-weight: 600;
   letter-spacing: 1.5;
@@ -101,7 +102,7 @@ header img {
 }
 
 .surprise-form {
-  padding-top: 2rem;
+  padding: 2rem 0rem;
   z-index: 5
 }
 
@@ -141,9 +142,7 @@ header img {
   color: rgb(0, 189, 209);
   text-transform:capitalize;
   margin: 0;
-  padding: 1rem;
-  position: relative;
-  top: 20px;
+  padding: 5rem 1rem 1rem 1rem;
   z-index: 5;
 }
 
@@ -238,7 +237,7 @@ h4 {
 
 .corona {
   width: 70%;
-  margin: 0 auto;
+  margin: 2rem auto;
   background-color: white;
   border: 4px solid lightslategray;
   border-radius: 10px;
@@ -393,5 +392,11 @@ footer p {
   }
   #home h2 {
     font-size: 2.2rem;
+  }
+}
+
+@media only screen and (max-height: 650px) {
+  .wave1 {
+    display: none
   }
 }
