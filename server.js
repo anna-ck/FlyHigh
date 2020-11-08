@@ -112,7 +112,7 @@ router.post('/submit', async (req, res) => {
             jsonToken = await tokenResponse.json();
             const depDateMin = new Date().toISOString().slice(0,10);
             const depDateMax = new Date(Date.now() + 12096e5).toISOString().slice(0,10);
-            const flightsUrlToFetch = `https://test.api.amadeus.com/v1/shopping/flight-destinations?origin=${destination}&departureDate=${depDateMin}%2C${depDateMax}&oneWay=false&nonStop=true&viewBy=COUNTRY`;
+            const flightsUrlToFetch = `https://test.api.amadeus.com/v1/shopping/flight-destinations?origin=${destination}&departureDate=${depDateMin}%2C${depDateMax}&oneWay=false&nonStop=true&viewBy=DESTINATION`;
             const flightsResponse = await fetch(flightsUrlToFetch, {
                 headers: {
                   'Authorization': jsonToken.token_type + ' ' + jsonToken.access_token,
@@ -127,6 +127,7 @@ router.post('/submit', async (req, res) => {
             }
             else {
                 flightsError = `Flights from ${destination} are not available at the moment`
+                flights = await flightsResponse.json()
             }
         }
     }
