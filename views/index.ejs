@@ -110,7 +110,7 @@
                 <h1>CHECK OUT THE BEST FLIGHT DEALS!</h1>
                 <h5>Enter city code below</h5>
                 <form class='flight-form' method='post' action='/submit'>
-                    <input class='flight-form__input' type="text" id="origin" placeholder='e.g. LAX' name='destination'>
+                    <input class='flight-form__input' type="text" id="origin" placeholder='e.g. LAX' name='origin'>
                     <button class='flight-form__button' type="submit">Search</button>
                 </form>
                 <div class="flight-info">
@@ -122,8 +122,8 @@
                 </div>
             </div>
             <% if(flights !== null && flights.data){ %>
-                <div id='flight-destination'>
-                    <p>Best flights from <%= destination.toUpperCase() %>:</p>
+                <div id='flight-origin'>
+                    <p>Best flights from <%= origin.toUpperCase() %>:</p>
                 </div>
                 <div class='flights' id='flights'>
                     <% flights.data.slice(0, 3).map((flight, index)=>{ %>
