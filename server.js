@@ -1,11 +1,7 @@
 const express = require('express');
 require('dotenv').config()
-//const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const fetch = require("node-fetch");
-//import fetch from 'node-fetch'
-//const dotenv = require('dotenv');
-//dotenv.config();
 const app = express();
 if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
@@ -15,15 +11,8 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-//app.engine('ejs', require('ejs').__express);
 app.use(express.static("client"))
 
-/*
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-*/
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
@@ -142,7 +131,6 @@ router.post('/submit', async (req, res) => {
         destination: destination, 
         flights: flights, 
         flightsError: flightsError,
-        token: jsonToken
     });
 })
 
