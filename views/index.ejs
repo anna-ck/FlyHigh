@@ -94,11 +94,11 @@
                     <% } %>
                     <% if(corona !== null){ %>
                         <div class='corona__content'>
-                            <h2>Coronavirus situation in <%= corona.Country %> <br> up to <%=corona.Date.slice(0,10) %> </h2>
-                            <p>New coronavirus cases: <span> <%=corona.NewConfirmed %></span></p>
-                            <p>New coronavirus deaths: <span> <%=corona.NewDeaths %></span></p>
-                            <p>Total coronavirus cases: <span> <%=corona.TotalConfirmed %></span></p>
-                            <p>Total coronavirus deaths: <span> <%=corona.TotalDeaths %></span></p>
+                            <h2>Coronavirus situation in <%= corona.Country %> <br> up to <%=new Date().toISOString().slice(0, 10) %> </h2>
+                            <p>New coronavirus cases: <span> <%=corona.Confirmed %></span></p>
+                            <p>New coronavirus deaths: <span> <%=corona.Deaths %></span></p>
+                            <p>Total coronavirus cases: <span> <%=corona.Recovered %></span></p>
+                            <p>Total coronavirus deaths: <span> <%=corona.Active %></span></p>
                         </div>
                     <% } %>
                 </div>
